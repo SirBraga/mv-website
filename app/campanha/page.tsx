@@ -78,7 +78,7 @@ export default function CampanhaPage() {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbwfTel_WY2Ga2DvX-VeVrCot8brnCtrb4eiqNmyHJ8jrOXCe9qZcDVM1znCNzRbKBRV/exec",
+        "https://script.google.com/macros/s/AKfycbyBpOHidG_ep_1IpXcGBzz2RgeWrzTPNt4NDqndhh9gXzjuUQtugT21ELNYCF_4XYzx/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
