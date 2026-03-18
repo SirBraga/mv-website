@@ -38,6 +38,10 @@ const indicacaoSchema = z.object({
     .string()
     .min(2, "Empresa deve ter pelo menos 2 caracteres")
     .max(100),
+  telefoneIndicado: z
+    .string()
+    .min(14, "Telefone inválido")
+    .max(15, "Telefone inválido"),
 });
 
 type IndicacaoFormData = z.infer<typeof indicacaoSchema>;
@@ -68,12 +72,13 @@ export default function CampanhaPage() {
       empresaIndicador: data.empresaIndicador,
       nomeIndicado: data.nomeIndicado,
       empresaIndicado: data.empresaIndicado,
+      telefoneIndicado: data.telefoneIndicado,
       source: "campanha-mes-consumidor",
     };
 
     try {
       const response = await fetch(
-        "COLE_AQUI_A_URL_DO_GOOGLE_APPS_SCRIPT",
+        "https://script.google.com/macros/s/AKfycbwfTel_WY2Ga2DvX-VeVrCot8brnCtrb4eiqNmyHJ8jrOXCe9qZcDVM1znCNzRbKBRV/exec",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -376,6 +381,36 @@ export default function CampanhaPage() {
                     {errors.empresaIndicado && (
                       <p className={errorClass}>
                         {errors.empresaIndicado.message}
+                      </p>
+                    )}
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="telefoneIndicado"
+                      className={labelClass}
+                    >
+                      Telefone do indicado *
+                    </label>
+                    <input
+                      id="telefoneIndicado"
+                      type="tel"
+                      placeholder="(31) 99999-9999"
+                      className={`${inputBase} ${errors.telefoneIndicado ? "border-red-400 focus:border-red-400 focus:ring-red-400/15" : ""}`}
+                      {...register("telefoneIndicado", {
+                        onChange: (e) => {
+                          const value = e.target.value.replace(/\D/g, "").slice(0, 11);
+                          if (value.length <= 10) {
+                            e.target.value = value.replace(/(\d{2})(\d{4})(\d{0,4})/, "($1) $2-$3").trim();
+                          } else {
+                            e.target.value = value.replace(/(\d{2})(\d{5})(\d{0,4})/, "($1) $2-$3").trim();
+                          }
+                        },
+                      })}
+                    />
+                    {errors.telefoneIndicado && (
+                      <p className={errorClass}>
+                        {errors.telefoneIndicado.message}
                       </p>
                     )}
                   </div>
