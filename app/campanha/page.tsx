@@ -78,12 +78,11 @@ export default function CampanhaPage() {
 
     try {
       const response = await fetch(
-        "https://script.google.com/macros/s/AKfycbw4Tyeotdyg09H9Sihx2g7rfk5C18op6gcPToeEeaTpREANpH8kKC00NlDhCuHmTxxsdQ/exec",
+        "https://n8n.mvmicro.com.br/webhook-test/e51d5498-4071-41f3-8157-78baec36a3ce",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
-          mode: "no-cors",
         }
       );
       
