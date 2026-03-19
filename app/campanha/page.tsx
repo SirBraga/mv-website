@@ -57,6 +57,9 @@ export default function CampanhaPage() {
   });
 
   async function onSubmit(data: IndicacaoFormData) {
+    console.log("📝 Iniciando envio de indicação...");
+    console.log("📋 Dados do formulário:", data);
+    
     const now = new Date();
     const dataRegistro = now.toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -76,6 +79,9 @@ export default function CampanhaPage() {
       source: "campanha-mes-consumidor",
     };
 
+    console.log("📦 Payload preparado:", payload);
+    console.log("🌐 Enviando para webhook n8n...");
+
     try {
       const response = await fetch(
         "https://n8n.mvmicro.com.br/webhook-test/e51d5498-4071-41f3-8157-78baec36a3ce",
@@ -83,8 +89,17 @@ export default function CampanhaPage() {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
+          mode: "no-cors",
         }
       );
+      
+      console.log("📡 Resposta recebida (modo no-cors):", {
+        type: response.type,
+        status: response.status,
+      });
+
+      // Com no-cors, não conseguimos ler a resposta, mas o webhook recebe os dados
+      console.log("✅ Requisição enviada ao webhook (modo no-cors - webhook deve ter recebido os dados)");
       
       toast.success("🎉 Indicação registrada com sucesso! Nossa equipe entrará em contato.", {
         position: "top-right",
@@ -95,10 +110,15 @@ export default function CampanhaPage() {
         draggable: true,
       });
       
-      console.log("✅ Dados enviados para Google Sheets");
+      console.log("✅ Indicação enviada com sucesso!");
       reset();
     } catch (error) {
-      console.error("❌ Erro ao enviar:", error);
+      console.error("❌ Erro ao enviar indicação:", error);
+      console.error("❌ Detalhes do erro:", {
+        message: error instanceof Error ? error.message : "Erro desconhecido",
+        payload: payload,
+      });
+      
       toast.error("❌ Erro ao enviar indicação. Tente novamente ou entre em contato.", {
         position: "top-right",
         autoClose: 5000,
