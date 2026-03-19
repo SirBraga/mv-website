@@ -84,7 +84,7 @@ export default function CampanhaPage() {
 
     try {
       const response = await fetch(
-        "https://n8n.mvmicro.com.br/webhook-test/e51d5498-4071-41f3-8157-78baec36a3ce",
+        "https://n8n.mvmicro.com.br/webhook/e51d5498-4071-41f3-8157-78baec36a3ce",
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
