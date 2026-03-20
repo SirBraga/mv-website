@@ -19,7 +19,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   const pathname = usePathname();
-  const isCampanha = pathname === "/campanha";
+  const isCampanha = pathname === "/campanha" || pathname === "/atualizar-dados";
 
   return (
     <html lang="pt-BR" className={jakarta.variable}>
